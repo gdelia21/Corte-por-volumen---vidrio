@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Corte de Producción de Botellas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Corte de Producción de Botellas</h1>
+
+        <div class="input-group">
+            <label for="bottleVolume">Volumen de la Botella (cc.):</label>
+            <select id="bottleVolume">
+                <option value="1000" selected>1000 cc</option>
+                <option value="970">970 cc</option>
+                <option value="925">925 cc</option>
+            </select>
+            <div id="bottleTypeConfirmation" class="bottle-type-confirmation"></div>
+        </div>
+
+        <div class="input-group">
+            <label for="hlLastTank">HL del Último Tanque:</label>
+            <input type="number" id="hlLastTank" placeholder="Ingresar número" step="any">
+        </div>
+
+        <div class="input-group">
+            <label for="bottlesFillerOpening">Botellas en Llenadora al Inicio del Último Tanque:</label>
+            <input type="number" id="bottlesFillerOpening" placeholder="Ingresar número" step="1">
+        </div>
+
+        <div class="buttons-group">
+            <button id="calculateButton">Calcular Puntos de Corte</button>
+            <button id="clearButton" class="secondary-button">Limpiar Campos</button>
+            <button id="printButton" class="tertiary-button">Imprimir</button>
+        </div>
+
+        <div class="result-box">
+            <h2>Corte en Llenadora:</h2>
+            <ul class="cut-results-list"> <li id="cutPointWasherResult" class="cut-result">Dejar de hacer hueco en lavadora a las: Esperando datos...</li>
+                <li id="cutPointDepalResult" class="cut-result">Corte en despaletizadora a las: Esperando datos...</li>
+            </ul>
+        </div>
+
+        <p class="clarification-note" id="clarificationNote">Se consideran 8 pallets incluidos los que se están despaletizando.</p>
+
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
