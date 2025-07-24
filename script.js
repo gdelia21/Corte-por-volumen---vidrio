@@ -13,8 +13,10 @@ const BOTTLES_FOR_WASHER_CUT = 27000; // Factor para dejar de hacer hueco en lav
 
 // --- FUNCIÓN PRINCIPAL DE CÁLCULO ---
 function calculate_cut_points(bottle_volume_cc, hl_ultimo_TP, bottles_filler_opening) {
-    // La validación de bottle_volume_cc ya se hace antes de llamar a esta función,
-    // así que garantizamos que estará en BOTTLES_PER_HL_FACTOR
+    if (!(bottle_volume_cc in BOTTLES_PER_HL_FACTOR)) {
+        throw new Error(`Volumen de botella no soportado: ${bottle_volume_cc}cc. Los volúmenes soportados son ${Object.keys(BOTTLES_PER_HL_FACTOR).join(', ')}.`);
+    }
+
     const bottles_per_hl = BOTTLES_PER_HL_FACTOR[bottle_volume_cc];
 
     // Cálculo del CORTE EN DESPALETIZADORA
@@ -37,7 +39,6 @@ function calculate_cut_points(bottle_volume_cc, hl_ultimo_TP, bottles_filler_ope
 }
 
 // --- OBTENER ELEMENTOS DEL DOM ---
-// Asegúrate de que estos ID coinciden con los ID en tu index.html
 const bottleVolumeSelect = document.getElementById('bottleVolume');
 const hlLastTankInput = document.getElementById('hlLastTank');
 const bottlesFillerOpeningInput = document.getElementById('bottlesFillerOpening');
@@ -69,10 +70,9 @@ function updateBottleTypeConfirmation() {
 
 // Función para restablecer los resultados a su estado inicial
 function resetResultsDisplay() {
-    cutPointWasherResult.textContent = 'Dejar de hacer hueco en lavadora a las: Esperando datos...';
-    cutPointDepalResult.textContent = 'Corte en despaletizadora a las: Esperando datos...';
-    cutPointWasherResult.style.color = '#333';
-    cutPointDepalResult.style.color = '#333';
+    cutPointWasherResult.innerHTML = 'Dejar de hacer hueco en lavadora a las: Esperando datos...';
+    cutPointDepalResult.innerHTML = 'Corte en despaletizadora a las: Esperando datos...';
+    // Los colores de texto ya están definidos en CSS por la clase result-number
 }
 
 // --- EVENT LISTENERS ---
@@ -87,7 +87,6 @@ calculateButton.addEventListener('click', () => {
     const bottlesFillerOpening = parseFloat(bottlesFillerOpeningInput.value);
 
     // Validaciones de entrada
-    // Se valida que bottleVolume sea uno de los valores permitidos [1000, 970, 925]
     if (isNaN(bottleVolume) || ![1000, 970, 925].includes(bottleVolume)) {
         showErrorMessage('Por favor, selecciona un volumen de botella válido (1000cc, 970cc o 925cc).');
         return;
@@ -104,20 +103,16 @@ calculateButton.addEventListener('click', () => {
     try {
         const results = calculate_cut_points(bottleVolume, hlLastTank, bottlesFillerOpening);
         
-        // Mostrar los dos resultados
-        cutPointWasherResult.textContent = `Dejar de hacer hueco en lavadora a las: ${Math.round(results.lavadora).toLocaleString('es-AR')} botellas`;
-        cutPointDepalResult.textContent = `Corte en despaletizadora a las: ${Math.round(results.despaletizadora).toLocaleString('es-AR')} botellas`;
-        
-        cutPointWasherResult.style.color = '#333';
-        cutPointDepalResult.style.color = '#333';
+        // Mostrar los dos resultados con el número en color diferente
+        cutPointWasherResult.innerHTML = `Dejar de hacer hueco en lavadora a las: <span class="result-number">${Math.round(results.lavadora).toLocaleString('es-AR')}</span> botellas`;
+        cutPointDepalResult.innerHTML = `Corte en despaletizadora a las: <span class="result-number">${Math.round(results.despaletizadora).toLocaleString('es-AR')}</span> botellas`;
 
     } catch (error) {
-        // Captura cualquier error dentro de calculate_cut_points o su manejo
         showErrorMessage(`Error en el cálculo: ${error.message}`);
-        cutPointWasherResult.textContent = 'Dejar de hacer hueco en lavadora a las: Error';
-        cutPointDepalResult.textContent = 'Corte en despaletizadora a las: Error';
-        cutPointWasherResult.style.color = '#dc3545';
-        cutPointDepalResult.style.color = '#dc3545';
+        cutPointWasherResult.innerHTML = 'Dejar de hacer hueco en lavadora a las: <span class="result-number error-text">Error</span>';
+        cutPointDepalResult.innerHTML = 'Corte en despaletizadora a las: <span class="result-number error-text">Error</span>';
+        // Añadir una clase de error también al número si lo deseas, o solo al mensaje general.
+        // Por ahora, solo el mensaje general de error mostrará el texto en rojo.
     }
 });
 

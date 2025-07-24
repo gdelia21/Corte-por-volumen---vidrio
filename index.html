@@ -22,12 +22,12 @@
 
         <div class="input-group">
             <label for="hlLastTank">HL del Último Tanque:</label>
-            <input type="number" id="hlLastTank" placeholder="Ej: 1000" step="any">
+            <input type="number" id="hlLastTank" placeholder="Ingresar número" step="any">
         </div>
 
         <div class="input-group">
             <label for="bottlesFillerOpening">Botellas en Llenadora al Inicio del Último Tanque:</label>
-            <input type="number" id="bottlesFillerOpening" placeholder="Ej: 150000" step="1">
+            <input type="number" id="bottlesFillerOpening" placeholder="Ingresar número" step="1">
         </div>
 
         <div class="buttons-group">
@@ -37,10 +37,13 @@
         </div>
 
         <div class="result-box">
-            <h2>Puntos de Corte Sugeridos:</h2>
-            <p id="cutPointWasherResult" class="cut-result">Dejar de hacer hueco en lavadora a las: Esperando datos...</p>
-            <p id="cutPointDepalResult" class="cut-result">Corte en despaletizadora a las: Esperando datos...</p>
+            <h2>Corte en Llenadora:</h2>
+            <ul class="cut-results-list"> <li id="cutPointWasherResult" class="cut-result">Dejar de hacer hueco en lavadora a las: Esperando datos...</li>
+                <li id="cutPointDepalResult" class="cut-result">Corte en despaletizadora a las: Esperando datos...</li>
+            </ul>
         </div>
+
+        <p class="clarification-note" id="clarificationNote">Se consideran 8 pallets incluidos los que se están despaletizando.</p>
 
         <div id="errorMessage" class="error-message"></div>
     </div>

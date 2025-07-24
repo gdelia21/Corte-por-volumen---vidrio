@@ -47,7 +47,7 @@ h1 {
     box-sizing: border-box; /* Include padding in width */
 }
 
-.bottle-type-confirmation { /* Cambiado de .can-type-confirmation */
+.bottle-type-confirmation {
     margin-top: 15px;
     font-size: 1.1em;
     font-weight: bold;
@@ -110,11 +110,26 @@ h1 {
     font-size: 1.4em;
 }
 
-.result-box p.cut-result { /* Estilo para las líneas de resultado */
-    font-size: 1.2em; /* Un poco más pequeño que el anterior para que quepan dos */
-    font-weight: bold;
+.result-box p.cut-result {
+    font-size: 1.2em;
+    font-weight: normal; /* Texto descriptivo normal */
     color: #333;
-    margin: 8px 0; /* Espacio entre las líneas de resultado */
+    margin: 15px 0; /* Aumentado el espacio entre las líneas de resultado */
+}
+
+.result-box ul.cut-results-list li.cut-result .result-number {
+    font-weight: bold;
+    color: #007bff; /* Un azul más claro para que coincida con los botones principales */
+    font-size: 1.5em; /* Un poco más grande para destacarse aún más */
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.clarification-note { /* Estilo para la aclaración pequeña */
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 15px; /* Espacio después de la caja de resultados */
+    margin-bottom: 20px; /* Espacio antes del mensaje de error */
 }
 
 .error-message {
@@ -123,7 +138,7 @@ h1 {
     border: 1px solid #f5c6cb;
     border-radius: 5px;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 20px; /* Ajustado el margen superior por la nota de aclaración */
     display: none; /* Hidden by default */
     text-align: left;
 }
